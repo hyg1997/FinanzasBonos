@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Bonos.Models.Bono>
+
+@{
+    ViewBag.Title = "Listar";
+    Layout = "~/Views/Shared/_Navbar.cshtml";
+}
+
+<h2>Listar</h2>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Nombre del Bono
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Borrar", "Eliminar", new { bonoId=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

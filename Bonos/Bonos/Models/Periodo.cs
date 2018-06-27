@@ -18,7 +18,7 @@ namespace Bonos.Models
         public double? amortizacion { get; set; }
         public double? prima { get; set; }
         public double? escudo { get; set; }
-        public double flujoEmisor { get; set; }
+        public double? flujoEmisor { get; set; }
         public double? flujoEmisorEscudo { get; set; }
         public double? flujoBonista { get; set; }
         public double? flujoActivo { get; set; }

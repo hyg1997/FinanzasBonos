@@ -1,0 +1,142 @@
+﻿@model Bonos.Models.Calculo
+
+@{
+    ViewBag.Title = "Resultados";
+    Layout = "~/Views/Shared/_Navbar.cshtml";
+}
+
+<h1>Resultados</h1>
+<br />
+<div>
+    <dl class="dl-horizontal">
+        <dt class="h3">
+            Estructuración
+        </dt>
+        <dt>
+            Cantidad de periodos
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.totalPeriodos)
+        </dd>
+
+        <dt>
+            Tasa Efectiva Anual
+        </dt>
+
+        <dd>
+            @(double.Parse(Html.DisplayFor(model => model.TEA).ToString())*100)%
+        </dd>
+
+        <dt>
+            Tasa Efectiva del periodo
+        </dt>
+
+        <dd>
+            @(double.Parse(@Html.DisplayFor(model => model.TEP).ToString())*100)%
+        </dd>
+
+        <dt>
+            Costo oportunidad capital
+        </dt>
+
+        <dd>
+            @(double.Parse(@Html.DisplayFor(model => model.COK).ToString())*100)%
+        </dd>
+
+        <dt>
+            Costes Iniciales Emisor
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.costesInicialesEmisor)
+        </dd>
+
+        <dt>
+            Costes Iniciales Bonista
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.costesInicialesBonista)
+        </dd>
+        <dt class="h3">
+            Ratios de Desición
+        </dt>
+        <dt>
+            Duracion
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.duracion)
+        </dd>
+
+        <dt>
+            Convexidad
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.convexidad)
+        </dd>
+
+        <dt>
+            Total
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total)
+        </dd>
+
+        <dt>
+           Duracion modificada
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.duracionModificada)
+        </dd>
+        <dt class="h3">
+            Precio Actual y Utilidad
+        </dt>
+        <dt>
+            Precio Actual
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.precioActual)
+        </dd>
+
+        <dt>
+            Utilidad / Pérdida
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.utilidad)
+        </dd>
+        <dt class="h3">
+            Indicadores de Rentabilidad
+        </dt>
+        <dt>
+            Tasa Costo Efectivo Anual (Emisor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TCEA)
+        </dd>
+
+        <dt>
+            Tasa Costo Efectivo Anual Con Escudo (Emisor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TCEAEmisor)
+        </dd>
+
+        <dt>
+            Tasa de Rendimiento Anual (Bonista)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TREA)
+        </dd>
+
+    </dl>
+</div>

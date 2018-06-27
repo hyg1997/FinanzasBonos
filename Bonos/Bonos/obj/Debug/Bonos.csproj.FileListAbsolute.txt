@@ -55,3 +55,4 @@ C:\Users\u201515078\Source\Repos\Bonos\Bonos\Bonos\obj\Debug\Bonos.Migrations.qu
 C:\Users\u201515078\Source\Repos\Bonos\Bonos\Bonos\obj\Debug\Bonos.Migrations.updatebono.resources
 C:\Users\u201515078\Source\Repos\Bonos\Bonos\Bonos\obj\Debug\Bonos.Migrations.asda.resources
 C:\Users\u201515078\Source\Repos\Bonos\Bonos\Bonos\obj\Debug\Bonos.Migrations.addperiodos.resources
+C:\Users\u201515078\Source\Repos\Bonos\Bonos\Bonos\obj\Debug\Bonos.Migrations.allresults.resources

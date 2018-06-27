@@ -19,7 +19,7 @@ namespace Bonos.Controllers
             ViewBag.apellido = SessionHelper.apellido;
             return View();
         }
-        
+
         public ActionResult Calcular()
         {
             Selects.llenarDatos();
@@ -43,11 +43,11 @@ namespace Bonos.Controllers
                 {
                     var user = db.Usuario.FirstOrDefault(x => x.Id == SessionHelper.userID);
                     bono.Usuario = user;
-                    bono.Calculo = MathCal.ResultadosEstructura(bono);
+                    bono.Calculo = MathCal.Resultados(bono, null);
                     bono.periodos = MathCal.ResultadosPeriodos(bono, bono.Calculo, new List<Periodo>());
                     db.Bono.Add(bono);
                     db.SaveChanges();
-                    return RedirectToAction("Flujo",new { calculoID = bono.Calculo.Id });
+                    return RedirectToAction("Flujo", new { calculoID = bono.Calculo.Id });
                 }
             }
             return View(bono);
@@ -59,14 +59,18 @@ namespace Bonos.Controllers
             using (var db = new BonosModel())
             {
                 bono = db.Bono.Include(x => x.Calculo).Include(x => x.periodos).FirstOrDefault(x => x.Calculo.Id == calculoID);
+                aux = bono.periodos;
+                bono.periodos = MathCal.ResultadosPeriodos(bono, bono.Calculo, bono.periodos);
+                bono.Calculo = MathCal.Resultados(bono, bono.periodos);
+                db.SaveChanges();
             }
-            aux = bono.periodos;
+
             if (bono.periodos.Any(x => x.plazoGracia != "S"))
             {
                 Selects.llenarDatos();
             }
-            
-            SessionHelper.calculoID = calculoID;
+
+            SessionHelper.calculoID = bono.Calculo.Id;
             return View(aux);
         }
 
@@ -82,9 +86,43 @@ namespace Bonos.Controllers
                     item.plazoGracia = periodos[item.N].plazoGracia;
                 }
                 bono.periodos = MathCal.ResultadosPeriodos(bono, bono.Calculo, bono.periodos);
+                bono.Calculo = MathCal.Resultados(bono, bono.periodos);
                 db.SaveChanges();
             }
             return RedirectToAction("Flujo", new { calculoID = bono.Calculo.Id });
+        }
+
+        public ActionResult Detalle()
+        {
+            Bono bono;
+            using (var db = new BonosModel())
+            {
+                bono = db.Bono.Include(x => x.Calculo).Include(x => x.periodos).FirstOrDefault(x => x.Calculo.Id == SessionHelper.calculoID);
+            }
+            return View(bono.Calculo);
+        }
+
+        public ActionResult Listar()
+        {
+            List<Bono> Bonos;
+            using (var db = new BonosModel())
+            {
+                Bonos = db.Bono.Include(x => x.Usuario).Where(x => x.Usuario.Id == SessionHelper.userID).ToList();
+
+            }
+            return View(Bonos);
+        }
+
+        public ActionResult Eliminar(int bonoId)
+        {
+            using (var db = new BonosModel())
+            {
+                var aux = db.Bono.Include(x=>x.periodos).Include(x=>x.Calculo)
+                    .FirstOrDefault(x => x.Id == bonoId);
+                db.Bono.Remove(aux);
+                db.SaveChanges();
+                return RedirectToAction("Listar");
+            }
         }
 
     }

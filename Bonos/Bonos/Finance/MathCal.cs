@@ -27,73 +27,54 @@ namespace Bonos.Finance
             return -Math.Round(bono * (Math.Pow(1 + TEP, numeroCuotas) * TEP) / (Math.Pow(1 + TEP, numeroCuotas) - 1), 2);
         }
 
-        //public static double HallarPrecioActual(List<Periodo> periodos, Estructuracion estructura)
-        //{
-        //    double resultado = 0;
-        //    for (int i = 1; i < periodos.Count; i++)
-        //    {
-        //        resultado = resultado + (periodos[i].flujo / Math.Pow(estructura.COK + 1, i));
-        //    }
-        //    return Math.Round(resultado, 2);
-        //}
-
-
-        //public static RatiosDesicion ResultadosRatios(List<Periodo> periodos, Estructuracion estructura, Bono bono)
-        //{
-        //    double sumaFAP = 0;
-        //    double sumaFA = 0;
-        //    double sumaFC = 0;
-        //    for (int i = 1; i < periodos.Count; i++)
-        //    {
-        //        sumaFAP = sumaFAP + periodos[i].flujoActivoPlazo.Value;
-        //        sumaFA = sumaFA + periodos[i].flujoActivo.Value;
-        //        sumaFC = sumaFC + periodos[i].factorConvexidad.Value;
-        //    }
-        //    RatiosDesicion resultado = new RatiosDesicion();
-        //    resultado.duracion = Math.Round(sumaFAP / sumaFA, 2);
-        //    resultado.convexidad = Math.Round(sumaFC / (Math.Pow(1 + estructura.COK, 2) * sumaFA * Math.Pow(bono.diasAño / bono.frecuencia, 2)), 2);
-        //    resultado.total = Math.Round(resultado.duracion + resultado.convexidad, 2);
-        //    resultado.duracionModificada = Math.Round(resultado.duracion / (1 + estructura.COK), 2);
-        //    return resultado;
-        //}
-
-        //public static Utilidad ResultadosUtilidad(List<Periodo> periodos, Estructuracion estructura, Bono bono)
-        //{
-        //    if (bono.tipoActor == "Emisor")
-        //    {
-        //        return null;
-        //    }
-        //    return new Utilidad
-        //    {
-        //        precioActual = HallarPrecioActual(periodos, estructura),
-        //        utilidad = Math.Round(periodos[0].flujo + HallarPrecioActual(periodos, estructura), 2)
-        //    };
-        //}
-
-
-        public static Calculo ResultadosEstructura(Bono bono)
+        public static double HallarPrecioActual(List<Periodo> periodos, Calculo calculo)
         {
-            return new Calculo
+            double resultado = 0;
+            for (int i = 1; i < periodos.Count; i++)
             {
-                totalPeriodos = (bono.diasAño / bono.frecuencia) * bono.años,
-                TEA = bono.tipoInteres == "Efectiva" ? bono.tasaInteres : Utils.HallarTEA(bono.tasaInteres, bono.diasAño, bono.capitalizacion.Value),
-                TEP = Utils.HallarTEP(bono.tasaInteres, bono.diasAño, bono.frecuencia, bono.capitalizacion),
-                COK = Utils.HallarCOK(bono.tasaDescuento, bono.diasAño, bono.frecuencia),
-                costesInicialesEmisor = HallarCostesInicialesEmisor(bono.vcomercial, bono.pEstructura, bono.pColoca, bono.pFlota, bono.pCAVALI),
-                costesInicialesBonista = HallarCostesInicialesBonista(bono.vcomercial, bono.pEstructura, bono.pColoca, bono.pFlota, bono.pCAVALI),
-            };
+                resultado = resultado + (periodos[i].flujoBonista.Value / Math.Pow(calculo.COK + 1, i));
+            }
+            return Math.Round(resultado, 2);
         }
 
-        //public static Rentabilidad ResultadosRentabilidad(Bono bono, List<Periodo> periodos)
-        //{
-        //    double[] flujos = periodos.Select(x => x.flujo).ToArray();
-        //    Rentabilidad resultado = new Rentabilidad
-        //    {
-        //        TCEA = Math.Round(Math.Pow(Financial.IRR(ref flujos) + 1, (double)bono.diasAño / bono.frecuencia) - 1, 9) * 100,
-        //        TREA = Math.Round(Math.Pow(Financial.IRR(ref flujos) + 1, (double)bono.diasAño / bono.frecuencia) - 1, 9) * 100,
-        //    };
-        //    return resultado;
-        //}
+
+        public static Calculo Resultados(Bono bono, List<Periodo> periodos)
+        {
+            double sumaFAP = 0;
+            double sumaFA = 0;
+            double sumaFC = 0;
+            
+            Calculo calculo = new Calculo();
+            calculo.totalPeriodos = (bono.diasAño / bono.frecuencia) * bono.años;
+            calculo.TEA = bono.tipoInteres == "Efectiva" ? bono.tasaInteres : Utils.HallarTEA(bono.tasaInteres, bono.diasAño, bono.capitalizacion.Value);
+            calculo.TEP = Utils.HallarTEP(bono.tasaInteres, bono.diasAño, bono.frecuencia, bono.capitalizacion);
+            calculo.COK = Utils.HallarCOK(bono.tasaDescuento, bono.diasAño, bono.frecuencia);
+            calculo.costesInicialesEmisor = HallarCostesInicialesEmisor(bono.vcomercial, bono.pEstructura, bono.pColoca, bono.pFlota, bono.pCAVALI);
+            calculo.costesInicialesBonista = HallarCostesInicialesBonista(bono.vcomercial, bono.pEstructura, bono.pColoca, bono.pFlota, bono.pCAVALI);
+            if (periodos != null)
+            {
+                for (int i = 1; i < periodos.Count; i++)
+                {
+                    sumaFAP = sumaFAP + periodos[i].flujoActivoPlazo.Value;
+                    sumaFA = sumaFA + periodos[i].flujoActivo.Value;
+                    sumaFC = sumaFC + periodos[i].factorConvexidad.Value;
+                }
+                calculo.duracion = Math.Round(sumaFAP / sumaFA, 2);
+                calculo.convexidad = Math.Round(sumaFC / (Math.Pow(1 + calculo.COK, 2) * sumaFA * Math.Pow(bono.diasAño / bono.frecuencia, 2)), 2);
+                calculo.total = Math.Round(calculo.duracion + calculo.convexidad, 2);
+                calculo.duracionModificada = Math.Round(calculo.duracion / (1 + calculo.COK), 2);
+                calculo.precioActual = HallarPrecioActual(periodos, calculo);
+                calculo.utilidad = Math.Round(periodos[0].flujoBonista.Value + HallarPrecioActual(periodos, calculo), 2);
+                double[] flujosEmisor = periodos.Select(x => x.flujoEmisor.Value).ToArray();
+                double[] flujosEmisorEscudo = periodos.Select(x => x.flujoEmisorEscudo.Value).ToArray();
+                double[] flujosBonista = periodos.Select(x => x.flujoBonista.Value).ToArray();
+                calculo.TCEA = Math.Round(Math.Pow(Financial.IRR(ref flujosEmisor) + 1, (double)bono.diasAño / bono.frecuencia) - 1, 9) * 100;
+                calculo.TCEAEmisor = Math.Round(Math.Pow(Financial.IRR(ref flujosEmisorEscudo) + 1, (double)bono.diasAño / bono.frecuencia) - 1, 9) * 100;
+                calculo.TREA = Math.Round(Math.Pow(Financial.IRR(ref flujosBonista) + 1, (double)bono.diasAño / bono.frecuencia) - 1, 9) * 100;
+            }
+
+            return calculo;
+        }
 
         public static List<Periodo> ResultadosPeriodos(Bono bono, Calculo calculo, List<Periodo> periodos)
         {

@@ -168,6 +168,10 @@
     <Compile Include="Migrations\201806270225552_add periodos.Designer.cs">
       <DependentUpon>201806270225552_add periodos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806270608011_all results.cs" />
+    <Compile Include="Migrations\201806270608011_all results.Designer.cs">
+      <DependentUpon>201806270608011_all results.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bono.cs" />
     <Compile Include="Models\BonosModel.cs" />
@@ -189,6 +193,8 @@
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Bono\Calcular.cshtml" />
     <Content Include="Views\Bono\Flujo.cshtml" />
+    <Content Include="Views\Bono\Detalle.cshtml" />
+    <Content Include="Views\Bono\Listar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -218,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806270225552_add periodos.resx">
       <DependentUpon>201806270225552_add periodos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806270608011_all results.resx">
+      <DependentUpon>201806270608011_all results.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
