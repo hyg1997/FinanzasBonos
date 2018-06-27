@@ -1,0 +1,29 @@
+﻿@model Bonos.Models.Usuario
+@{
+    ViewBag.Title = "Inicio Sesión";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center mt-5">
+    <form class="form-signin" method="post">
+        @Html.AntiForgeryToken()
+        <img class="mb-4" src="https://cdn4.iconfinder.com/data/icons/finance-and-banking-free/64/Finance_financial_report-512.png" alt="" width="150" height="150">
+        <h1 class="h3 mb-3 font-weight-normal">@ViewBag.Title</h1>
+        @Html.TextBoxFor(model => model.username, new { @class = "form-control", @placeholder = "Nombre de usuario" })
+        @Html.TextBoxFor(model => model.password, new { @class = "form-control mt-3 mb-1", @placeholder = "Contraseña", @type = "password" })
+        @Html.ValidationMessage("notFound", new { @class = "text-danger" })
+        <br />
+        @Html.ActionLink("Registrarse", "Register")
+        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Entrar</button>
+        <p class="mt-5 mb-3 text-muted">© UPC-2018</p>
+    </form>
+</div>
+
+<style scoped>
+    .form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: auto;
+    }
+</style>

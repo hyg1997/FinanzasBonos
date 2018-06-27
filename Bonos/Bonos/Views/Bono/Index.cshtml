@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Navbar.cshtml";
+}
+
+<h1 class="text-center">Bienvenido @ViewBag.nombre @ViewBag.apellido</h1>
+
+<style>
+    body {
+        background-image: url("https://images.pexels.com/photos/938965/pexels-photo-938965.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+        background-size: cover;
+        background-position-x: center;
+        background-position-y: 100px;
+        background-repeat: no-repeat;
+    }
+
+    @@media only screen and (max-width: 768px) {
+        body {
+            background-position-y: 300px;
+        }
+        h1 {
+            padding-top: 0;
+            font-size: 25px;
+        }
+    }
+</style>

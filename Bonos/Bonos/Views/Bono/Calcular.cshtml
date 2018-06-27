@@ -1,0 +1,108 @@
+﻿@model Bonos.Models.Bono
+@using Bonos.Helpers
+
+@{
+    ViewBag.Title = "Bonos corporativos";
+    Layout = "~/Views/Shared/_Navbar.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <hr />
+    <div class="row">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre del Bono" } })
+                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.EditorFor(model => model.vnominal, new { htmlAttributes = new { @class = "form-control", placeholder = "Valor nominal" } })
+                @Html.ValidationMessageFor(model => model.vnominal, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.vcomercial, new { htmlAttributes = new { @class = "form-control", placeholder = "Valor comercial" } })
+                @Html.ValidationMessageFor(model => model.vcomercial, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.años, new { htmlAttributes = new { @class = "form-control", placeholder = "Años" } })
+                @Html.ValidationMessageFor(model => model.años, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(model=>model.frecuencia, Selects.frecuenciaBono, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.frecuencia, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.diasAño, Selects.diasAño, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.diasAño, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.tipoInteres, Selects.tipoInteres, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.tipoInteres, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.capitalizacion, new { htmlAttributes = new { @class = "form-control", placeholder = "Capitalización" } })
+                @Html.ValidationMessageFor(model => model.capitalizacion, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.tasaInteres, new { htmlAttributes = new { @class = "form-control", placeholder = "Tasa de interes" } })
+                @Html.ValidationMessageFor(model => model.tasaInteres, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.tasaDescuento, new { htmlAttributes = new { @class = "form-control", placeholder = "Tasa de descuento" } })
+                @Html.ValidationMessageFor(model => model.tasaDescuento, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.impuestoRenta, new { htmlAttributes = new { @class = "form-control", placeholder = "Impuesto a la Renta" } })
+                @Html.ValidationMessageFor(model => model.impuestoRenta, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.EditorFor(model => model.pPrima, new { htmlAttributes = new { @class = "form-control", placeholder = "Porcentaje prima" } })
+                @Html.ValidationMessageFor(model => model.pPrima, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.pEstructura, new { htmlAttributes = new { @class = "form-control", placeholder = "Porcentaje estructuración" } })
+                @Html.ValidationMessageFor(model => model.pEstructura, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.pColoca, new { htmlAttributes = new { @class = "form-control", placeholder = "Porcentaje colocación" } })
+                @Html.ValidationMessageFor(model => model.pColoca, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.pFlota, new { htmlAttributes = new { @class = "form-control", placeholder = "Porcentaje flotación" } })
+                @Html.ValidationMessageFor(model => model.pFlota, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.pCAVALI, new { htmlAttributes = new { @class = "form-control", placeholder = "Porcentaje CAVALI" } })
+                @Html.ValidationMessageFor(model => model.pCAVALI, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+        <div class="form-group">
+            <input type="submit" value="Calcular" class="btn btn-default" />
+        </div>
+}

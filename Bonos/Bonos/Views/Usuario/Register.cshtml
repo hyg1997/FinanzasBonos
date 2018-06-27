@@ -1,0 +1,39 @@
+﻿@model Bonos.Models.Usuario
+@{
+    ViewBag.Title = "Registro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center mt-5">
+    <form class="form-signin" method="post">
+        @Html.AntiForgeryToken()
+        <img class="mb-4" src="https://cdn4.iconfinder.com/data/icons/finance-and-banking-free/64/Finance_financial_report-512.png" alt="" width="150" height="150">
+        <h1 class="h3 mb-3 font-weight-normal">@ViewBag.Title</h1>
+        @Html.TextBoxFor(model => model.username, new { @class = "form-control", @placeholder = "Nombre de usuario" })
+        @Html.ValidationMessageFor(model=>model.username, "",new { @class = "text-danger" })
+        
+        @Html.TextBoxFor(model => model.password, new { @class = "form-control mt-3", @placeholder = "Contraseña", @type = "password" })
+        @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+        
+        @Html.TextBoxFor(model => model.confirmPassword, new { @class = "form-control mt-3", @placeholder = "Confirmar contraseña", @type = "password" })
+        @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @class = "text-danger" })
+        
+        @Html.TextBoxFor(model => model.nombre, new { @class = "form-control mt-3", @placeholder = "Nombre" })
+        @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+        
+        @Html.TextBoxFor(model => model.apellido, new { @class = "form-control mt-3", @placeholder = "Apellido" })
+        @Html.ValidationMessageFor(model => model.apellido, "", new { @class = "text-danger" })
+        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Registrarse</button>
+        @Html.ActionLink("Cancelar","Login","Usuario",new { @class = "btn btn-lg btn-danger btn-block mt-2" })
+        <p class="mt-5 mb-3 text-muted">© UPC-2018</p>
+    </form>
+</div>
+
+<style scoped>
+    .form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: auto;
+    }
+</style>
