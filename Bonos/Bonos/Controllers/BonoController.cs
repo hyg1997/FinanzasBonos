@@ -61,7 +61,31 @@ namespace Bonos.Controllers
                 bono = db.Bono.Include(x => x.Calculo).Include(x => x.periodos).FirstOrDefault(x => x.Calculo.Id == calculoID);
             }
             aux = bono.periodos;
+            if (bono.periodos.Any(x => x.plazoGracia != "S"))
+            {
+                Selects.llenarDatos();
+            }
+            
+            SessionHelper.calculoID = calculoID;
             return View(aux);
         }
+
+        [HttpPost]
+        public ActionResult Flujo(List<Periodo> periodos)
+        {
+            Bono bono;
+            using (var db = new BonosModel())
+            {
+                bono = db.Bono.Include(x => x.Calculo).Include(x => x.periodos).FirstOrDefault(x => x.Calculo.Id == SessionHelper.calculoID);
+                foreach (var item in bono.periodos)
+                {
+                    item.plazoGracia = periodos[item.N].plazoGracia;
+                }
+                bono.periodos = MathCal.ResultadosPeriodos(bono, bono.Calculo, bono.periodos);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Flujo", new { calculoID = bono.Calculo.Id });
+        }
+
     }
 }

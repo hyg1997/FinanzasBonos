@@ -10,5 +10,6 @@ namespace Bonos.Helpers
         public static int userID { get; set; }
         public static string nombre { get; set; }
         public static string apellido { get; set; }
+        public static int calculoID { get; set; }
     }
 }
