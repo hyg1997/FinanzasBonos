@@ -54,5 +54,6 @@ namespace Bonos.Models
         public string nombre { get; set; }
         public Usuario Usuario { get; set; }
         public Calculo Calculo { get; set; }
+        public List<Periodo> periodos { get; set; }
     }
 }

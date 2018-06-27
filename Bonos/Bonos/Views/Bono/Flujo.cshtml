@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Bonos.Models.Periodo>
+
+@{
+    ViewBag.Title = "Flujo";
+    Layout = "~/Views/Shared/_Navbar.cshtml";
+}
+
+<form class="float-right my-2 my-md-0">
+    @Html.ActionLink("Resultados", "", "", new { @class = "btn btn-success" })
+</form>
+<h2>Flujo</h2>
+<br/>
+<table class="table table-responsive">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            P.G.
+        </th>
+        <th>
+            Bono
+        </th>
+        <th>
+            Cupón
+        </th>
+        <th>
+            Cuota
+        </th>
+        <th>
+            Amortización
+        </th>
+        <th>
+            Prima
+        </th>
+        <th>
+            Escudo
+        </th>
+        <th>
+            Flujo Emisor
+        </th>
+        <th>
+            Flujo c/Escudo
+        </th>
+        <th>
+            Flujo Bonista
+        </th>
+        <th>
+            Flujo Activo
+        </th>
+        <th>
+            Flujo Act plazo
+        </th>
+        <th>
+            Factor convexidad
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.N)
+        </td>
+        @if (item.N != 0 && item.N < Model.Count()-1)
+        {
+            <td>
+                @Html.TextBoxFor(modelItem => item.plazoGracia, new { @class = "form-control" })
+            </td>
+        }else
+        {
+            <td></td>
+        }
+        <td class = "@(item.bono < 0 ? "text-danger": "")">
+            @Html.DisplayFor(modelItem => item.bono)
+        </td>
+        <td class = "@(item.cupon < 0 ? "text-danger": "")">
+            @Html.DisplayFor(modelItem => item.cupon)
+        </td>
+        <td class = "@(item.cuota < 0 ? "text-danger": "")">
+            @Html.DisplayFor(modelItem => item.cuota)
+        </td>
+        <td class = "@(item.amortizacion < 0 ? "text-danger": "")">
+            @Html.DisplayFor(modelItem => item.amortizacion)
+        </td>
+        <td class = "@(item.prima < 0 ? "text-danger": "")">
+            @Html.DisplayFor(modelItem => item.prima)
+        </td>
+        <td class = "@(item.escudo < 0 ? "text-danger": "")">
+            @Html.DisplayFor(modelItem => item.escudo)
+        </td>
+        <td class = "@(item.flujoEmisor < 0 ? "text-danger": "")">
+            @Html.DisplayFor(modelItem => item.flujoEmisor)
+        </td>
+        <td class = "@(item.flujoEmisorEscudo < 0 ? "text-danger": "")">
+            @Html.DisplayFor(modelItem => item.flujoEmisorEscudo)
+        </td>
+        <td class = "@(item.flujoBonista < 0 ? "text-danger": "")">
+            @Html.DisplayFor(modelItem => item.flujoBonista)
+        </td>
+        <td class = "@(item.flujoActivo < 0 ? "text-danger": "")">
+            @Html.DisplayFor(modelItem => item.flujoActivo)
+        </td>
+        <td class = "@(item.flujoActivoPlazo < 0 ? "text-danger": "")">
+            @Html.DisplayFor(modelItem => item.flujoActivoPlazo)
+        </td>
+        <td class = "@(item.factorConvexidad < 0 ? "text-danger": "")">
+            @Html.DisplayFor(modelItem => item.factorConvexidad)
+        </td>
+    </tr>
+}
+
+</table>
+
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>

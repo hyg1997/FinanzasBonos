@@ -54,3 +54,4 @@ C:\Users\u201515078\Source\Repos\Bonos\Bonos\Bonos\obj\Debug\Bonos.Migrations.ad
 C:\Users\u201515078\Source\Repos\Bonos\Bonos\Bonos\obj\Debug\Bonos.Migrations.quitartipodeactor.resources
 C:\Users\u201515078\Source\Repos\Bonos\Bonos\Bonos\obj\Debug\Bonos.Migrations.updatebono.resources
 C:\Users\u201515078\Source\Repos\Bonos\Bonos\Bonos\obj\Debug\Bonos.Migrations.asda.resources
+C:\Users\u201515078\Source\Repos\Bonos\Bonos\Bonos\obj\Debug\Bonos.Migrations.addperiodos.resources

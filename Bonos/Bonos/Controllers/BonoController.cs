@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace Bonos.Controllers
 {
@@ -43,12 +44,24 @@ namespace Bonos.Controllers
                     var user = db.Usuario.FirstOrDefault(x => x.Id == SessionHelper.userID);
                     bono.Usuario = user;
                     bono.Calculo = MathCal.ResultadosEstructura(bono);
+                    bono.periodos = MathCal.ResultadosPeriodos(bono, bono.Calculo, new List<Periodo>());
                     db.Bono.Add(bono);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Flujo",new { calculoID = bono.Calculo.Id });
                 }
             }
             return View(bono);
+        }
+        public ActionResult Flujo(int calculoID)
+        {
+            List<Periodo> aux;
+            Bono bono;
+            using (var db = new BonosModel())
+            {
+                bono = db.Bono.Include(x => x.Calculo).Include(x => x.periodos).FirstOrDefault(x => x.Calculo.Id == calculoID);
+            }
+            aux = bono.periodos;
+            return View(aux);
         }
     }
 }

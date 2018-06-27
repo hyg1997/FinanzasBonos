@@ -10,7 +10,6 @@ namespace Bonos.Finance
     public class MathCal
     {
 
-
         public static double HallarCostesInicialesEmisor( double valorComercial, double pEstructuracion, double pColocacion, double pFlotacion, double pCAVALI)
         {
             double suma = pEstructuracion + pFlotacion + pColocacion + pCAVALI;
@@ -135,7 +134,7 @@ namespace Bonos.Finance
                 aux.prima = aux.N == calculo.totalPeriodos ? -Math.Round(bono.pPrima * bono.vnominal, 2) : 0;
                 aux.escudo = Math.Round(-aux.cupon.Value * bono.impuestoRenta, 2);
                 aux.flujoEmisor = Math.Round(aux.cuota.Value + aux.prima.Value, 2);
-                aux.flujoEmisorEscudo = aux.escudo + aux.flujoEmisorEscudo;
+                aux.flujoEmisorEscudo = aux.escudo + aux.flujoEmisor;
                 aux.flujoBonista = -Math.Round(aux.cuota.Value + aux.prima.Value, 2);
                 aux.flujoActivo = Math.Round(aux.flujoBonista.Value / Math.Pow(1 + calculo.COK, aux.N), 2);
                 aux.flujoActivoPlazo = Math.Round(aux.flujoActivo.Value * aux.N * bono.frecuencia / bono.diasAño, 2);
